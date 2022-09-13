@@ -1,3 +1,5 @@
+import java.util.stream.Stream;
+
 public class Block implements IBlock {
     private final String color;
     private final String material;
@@ -15,5 +17,10 @@ public class Block implements IBlock {
     @Override
     public String getMaterial() {
         return material;
+    }
+
+    @Override
+    public Stream<IBlock> toStream() {
+        return Stream.of(this);
     }
 }

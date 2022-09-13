@@ -13,23 +13,29 @@ public class Wall implements IStructure {
 
     @Override
     public Optional findBlockByColor(String color) {
-        return blocks
-                .stream()
+        if (color == null) {
+            throw new IllegalArgumentException("Color equals null");
+        }
+        return blocks.stream()
+                .flatMap(IBlock::toStream)
                 .filter(b -> b.getColor().equals(color))
                 .findAny();
     }
 
     @Override
     public List findBlocksByMaterial(String material) {
-        return blocks
-                .stream()
+        if (material == null) {
+            throw new IllegalArgumentException("Material equals null");
+        }
+        return blocks.stream()
+                .flatMap(IBlock::toStream)
                 .filter(b -> b.getMaterial().equals(material))
                 .collect(Collectors.toList());
     }
 
     @Override
     public int count() {
-        return blocks.size();
+        return ((int) blocks.stream().flatMap(IBlock::toStream).count());
     }
 
     private void addBlock(IBlock block) {
